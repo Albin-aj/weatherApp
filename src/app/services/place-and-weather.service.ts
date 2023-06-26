@@ -18,7 +18,6 @@ export class PlaceAndWeatherService {
   constructor(private http:HttpClient) { }
 
    getPlaces(inputs:string):Observable<Datas[]>{
-    console.log(inputs);
     return  this.http.get<RootObject>(`${this.PLACE_BASE_URL}/cities?minPopulation=10000&namePrefix=${inputs}`,{
       headers:{
         "X-RapidAPI-Key":"12fb8ea0b5mshac2ac85041f834dp192b3ejsndc50077080da",

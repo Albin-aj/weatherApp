@@ -20,10 +20,10 @@ export class HomeComponent {
   nextDays!:List[]
   $currentForecast!:any
   today = new Date()
-  debounce = new Subject<string>()
+  $input = new Subject<string>()
 
   constructor(private service: PlaceAndWeatherService, private datePipe:DatePipe) {
-    this.debounce.pipe(debounceTime(600),
+    this.$input.pipe(debounceTime(600),
     distinctUntilChanged()).subscribe(val=>{
     this.search(val)
     this.searchInput = val
@@ -36,7 +36,6 @@ export class HomeComponent {
 
   passPlace(item:Datas | any ){
     this.searchInput = item.name
-    console.log(item.name);
     this.$places = new Observable<Datas[]>
     this.$current = this.service.getCurrentWeatherData(item.latitude,item.longitude)
     this.$forcast = this.service.getForecast(item.latitude,item.longitude)
@@ -62,6 +61,11 @@ export class HomeComponent {
       this.passPlace(loc.coords)
       })
     }
-    else{alert('location not support')}
+    else{alert('Your system rejected this request')}
   }
+
+
+
+
+
 }
