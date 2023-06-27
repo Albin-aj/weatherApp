@@ -4,6 +4,7 @@ import { Observable, map } from 'rxjs';
 import { Datas, RootObject } from '../model/rapidPlace';
 import { IWeather } from '../model/weather';
 import { List, Rootforecast } from '../model/forcast';
+import { environment } from 'src/environments/environment.development';
 
 @Injectable({
   providedIn: 'root'
@@ -11,8 +12,8 @@ import { List, Rootforecast } from '../model/forcast';
 export class PlaceAndWeatherService {
 
   PLACE_BASE_URL = "https://wft-geo-db.p.rapidapi.com/v1/geo"
-  WEATHER_BASE_URL = "http://api.openweathermap.org/data/2.5"
-  API_KEY = "dfcf63497698e598a82dd43eee8890c9"
+  WEATHER_BASE_URL = "https://api.openweathermap.org/data/2.5"
+  API_KEY = environment.API_KEY
 
 
   constructor(private http:HttpClient) { }
@@ -20,7 +21,7 @@ export class PlaceAndWeatherService {
    getPlaces(inputs:string):Observable<Datas[]>{
     return  this.http.get<RootObject>(`${this.PLACE_BASE_URL}/cities?minPopulation=10000&namePrefix=${inputs}`,{
       headers:{
-        "X-RapidAPI-Key":"12fb8ea0b5mshac2ac85041f834dp192b3ejsndc50077080da",
+        "X-RapidAPI-Key":environment.X_RapidAPI_Key,
         "X-RapidAPI-Host":"wft-geo-db.p.rapidapi.com"
       }
     }).pipe(map(root=>{
